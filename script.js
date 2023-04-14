@@ -1,11 +1,23 @@
+//factory function to create players
+const playerFactory = (name, marker) => {
+    return { name, marker };
+  };
+  
+const player = playerFactory('player', 'X');
+
+const computer = playerFactory('computer', 'O');
+
 //module which initializes the gameboard
 const Gameboard = (() => {
     const gameboard = ['', '', '', '', '', '', '', '', ''];
     const table = document.querySelector('#table');
 
     function choiceOnBoard (event) {
-        event.target.textContent = `${player.marker}`;
-        gameboard.splice(event.target.getAttribute("data-index"), 1, `${player.marker}`);
+        if (event.target.textContent === '') {
+            event.target.textContent = `${Game.currentPlayer.marker}`;
+            gameboard.splice(event.target.getAttribute("data-index"), 1, `${Game.currentPlayer.marker}`);
+            Game.turnation(); 
+        }
     }
 
     function initializeBoard () {
@@ -24,11 +36,25 @@ const Gameboard = (() => {
     return gameboard;
 })();
 
-//factory function to create players
-const playerFactory = (name, marker) => {
-    return { name, marker };
-  };
-  
-const player = playerFactory('player', 'X');
+//module which handles the game
 
-const computer = playerFactory('computer', 'O');
+const Game = (() => {
+    let turn = 0;
+    let currentPlayer = player;
+
+    let turnation = () => {
+        if (turn === 0) {
+            currentPlayer = computer;
+            turn = 1;
+        } else {
+            currentPlayer = player;
+            turn = 1;
+        }
+
+        return {currentPlayer, turn}
+    }
+
+    return {turnation, currentPlayer}
+
+})();
+
