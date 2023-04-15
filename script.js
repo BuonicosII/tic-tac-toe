@@ -16,7 +16,8 @@ const Gameboard = (() => {
         if (event.target.textContent === '') {
             event.target.textContent = `${Game.currentPlayer.marker}`;
             gameboard.splice(event.target.getAttribute("data-index"), 1, `${Game.currentPlayer.marker}`);
-            Game.turnation(); 
+            Game.callTurnation();
+            Game.callCiao();
         }
     }
 
@@ -33,7 +34,6 @@ const Gameboard = (() => {
 
     initializeBoard();
 
-    return gameboard;
 })();
 
 //module which handles the game
@@ -42,19 +42,29 @@ const Game = (() => {
     let turn = 0;
     let currentPlayer = player;
 
-    let turnation = () => {
-        if (turn === 0) {
-            currentPlayer = computer;
-            turn = 1;
-        } else {
-            currentPlayer = player;
-            turn = 1;
+    let _turnation = () => {
+        if (Game.turn === 0) {
+            Game.currentPlayer = computer;
+            Game.turn = 1;
+        } else if (Game.turn === 1) {
+            Game.currentPlayer = player;
+            Game.turn = 0;
         }
-
-        return {currentPlayer, turn}
     }
 
-    return {turnation, currentPlayer}
+    let callTurnation = () => {
+        _turnation();
+    }
+
+    let _ciao = () => {
+        console.log(Game.currentPlayer);
+    }
+
+    let callCiao = () => {
+        _ciao();
+    }
+
+    return {callTurnation, callCiao, turn, currentPlayer}
 
 })();
 
