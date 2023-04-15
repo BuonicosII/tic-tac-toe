@@ -31,9 +31,18 @@ const Gameboard = (() => {
         }
     }
 
+    let victoryChecker = () => {
+        if (
+            gameboard[0] === gameboard[1]
+            //gameboard[] === gameboard[] === gameboard[] ||
+            ) {
+                return true;
+            }
+    };
+
     initializeBoard();
 
-    return {gameboard}
+    return {victoryChecker}
 
 })();
 
@@ -44,7 +53,9 @@ const Game = (() => {
     let currentPlayer = player;
 
     let _turnation = () => {
-        if (turn === 0) {
+        if (Gameboard.victoryChecker()) {
+            alert(`${currentPlayer.name} won`);
+        } else if (turn === 0) {
             currentPlayer = computer;
             turn = 1;
         } else if (turn === 1) {
@@ -64,4 +75,3 @@ const Game = (() => {
     return {callTurnation, getMarker}
 
 })();
-
