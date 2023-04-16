@@ -33,16 +33,38 @@ const Gameboard = (() => {
 
     let victoryChecker = () => {
         if (
-            gameboard[0] === gameboard[1]
-            //gameboard[] === gameboard[] === gameboard[] ||
+            gameboard[0] === gameboard[1] && gameboard[1] === gameboard[2] && gameboard[0] !== '' ||
+            gameboard[3] === gameboard[4] && gameboard[4] === gameboard[5] && gameboard[3] !== '' ||
+            gameboard[6] === gameboard[7] && gameboard[7] === gameboard[8] && gameboard[6] !== '' ||
+            gameboard[0] === gameboard[3] && gameboard[3] === gameboard[6] && gameboard[0] !== '' ||
+            gameboard[1] === gameboard[4] && gameboard[4] === gameboard[7] && gameboard[1] !== '' ||
+            gameboard[2] === gameboard[5] && gameboard[5] === gameboard[8] && gameboard[2] !== '' ||
+            gameboard[0] === gameboard[4] && gameboard[4] === gameboard[8] && gameboard[0] !== '' ||
+            gameboard[2] === gameboard[4] && gameboard[4] === gameboard[6] && gameboard[2] !== '' 
             ) {
                 return true;
             }
     };
 
+    let tieChecker = () => {
+        if (gameboard.indexOf('') === -1) {
+            return true;
+        }
+    }
+
+    let resetBoard = () => {
+        for (const key of gameboard.keys()) {
+            gameboard.splice(key, 1, '');
+        };
+        while (table.hasChildNodes()) {
+            table.removeChild(table.firstChild);
+          };
+        initializeBoard();
+    }
+
     initializeBoard();
 
-    return {victoryChecker}
+    return {victoryChecker, resetBoard, tieChecker}
 
 })();
 
@@ -54,7 +76,15 @@ const Game = (() => {
 
     let _turnation = () => {
         if (Gameboard.victoryChecker()) {
-            alert(`${currentPlayer.name} won`);
+            console.log(`${currentPlayer.name} won`);
+            Gameboard.resetBoard();
+            turn = 0;
+            currentPalyer = player;
+        } else if (Gameboard.tieChecker()){
+            console.log(`Tie!`);
+            Gameboard.resetBoard();
+            turn = 0;
+            currentPalyer = player;
         } else if (turn === 0) {
             currentPlayer = computer;
             turn = 1;
