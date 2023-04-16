@@ -1,11 +1,29 @@
+//due pulsanti
+
+//gioca contro giocatore
+//  rimuovi tutti i child pagina
+//  form (name, marker)
+//  assegna nuovo giocatore a player1
+//  assegna nuovo giocatore a player2
+//  rimuovi tutti i child pagina
+//  initializeboard
+
+//gioca contro computer
+//  rimuovi tutti i child pagina
+//  form (name, marker)
+//  assegna nuovo giocatore a player1
+//  assegna computer a player2
+//  rimuovi tutti i child pagina
+//  initializeboard
+
 //factory function to create players
 const playerFactory = (name, marker) => {
     return { name, marker };
   };
   
-const player = playerFactory('player', 'X');
+const player1 = playerFactory('player', 'X');
 
-const computer = playerFactory('computer', 'O');
+const player2 = playerFactory('computer', 'O');
 
 //module which initializes the gameboard
 const Gameboard = (() => {
@@ -72,7 +90,7 @@ const Gameboard = (() => {
 
 const Game = (() => {
     let turn = 0;
-    let currentPlayer = player;
+    let currentPlayer = player1;
 
     let _turnation = () => {
         if (Gameboard.victoryChecker()) {
@@ -84,12 +102,12 @@ const Game = (() => {
             console.log(`Tie!`);
             Gameboard.resetBoard();
             turn = 0;
-            currentPalyer = player;
+            currentPalyer = player1;
         } else if (turn === 0) {
-            currentPlayer = computer;
+            currentPlayer = player2;
             turn = 1;
         } else if (turn === 1) {
-            currentPlayer = player;
+            currentPlayer = player1;
             turn = 0;
         }
     }
