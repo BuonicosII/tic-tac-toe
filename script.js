@@ -1,29 +1,3 @@
-//due pulsanti
-
-//gioca contro giocatore
-//  rimuovi tutti i child pagina
-//  form (name, marker)
-//  assegna nuovo giocatore a player1
-//  assegna nuovo giocatore a player2
-//  rimuovi tutti i child pagina
-//  initializeboard
-
-//gioca contro computer
-//  rimuovi tutti i child pagina
-//  form (name, marker)
-//  assegna nuovo giocatore a player1
-//  assegna computer a player2
-//  rimuovi tutti i child pagina
-//  initializeboard
-
-//factory function to create players
-const playerFactory = (name, marker) => {
-    return { name, marker };
-  };
-  
-const player1 = playerFactory('player', 'X');
-
-const player2 = playerFactory('computer', 'O');
 
 //module which initializes the gameboard
 const Gameboard = (() => {
@@ -89,6 +63,53 @@ const Gameboard = (() => {
 //module which handles the game
 
 const Game = (() => {
+
+    const header = document.querySelector('#header');
+
+    //create a pvp button to start the pvp game
+    const pvp = document.createElement('button');
+    pvp.textContent = 'Player VS Player';
+    header.appendChild(pvp);
+
+    //create a pvcpu button to start the pvcpu game
+    const pvcpu = document.createElement('button');
+    pvcpu.textContent = 'Player VS Computer';
+    header.appendChild(pvcpu);
+
+    //function to display a form to create a player
+
+    function pvpFunc () {
+        while (header.hasChildNodes()) {
+            header.removeChild(table.firstChild);
+          };
+
+        
+    }
+
+    //gioca contro giocatore
+    //  rimuovi tutti i child pagina
+    //  form (name, marker)
+    //  assegna nuovo giocatore a player1
+    //  assegna nuovo giocatore a player2
+    //  rimuovi tutti i child pagina
+    //  initializeboard
+
+    //gioca contro computer
+    //  rimuovi tutti i child pagina
+    //  form (name, marker)
+    //  assegna nuovo giocatore a player1
+    //  assegna computer a player2
+    //  rimuovi tutti i child pagina
+    //  initializeboard
+
+    //factory function to create players
+    const playerFactory = (name, marker) => {
+        return { name, marker };
+    };
+    
+    const player1 = playerFactory('player', 'X');
+
+    const player2 = playerFactory('computer', 'O');
     let turn = 0;
     let currentPlayer = player1;
 
@@ -97,12 +118,12 @@ const Game = (() => {
             console.log(`${currentPlayer.name} won`);
             Gameboard.resetBoard();
             turn = 0;
-            currentPalyer = player;
+            currentPalyer = player1;
         } else if (Gameboard.tieChecker()){
             console.log(`Tie!`);
             Gameboard.resetBoard();
             turn = 0;
-            currentPalyer = player1;
+            currentPlayer = player1;
         } else if (turn === 0) {
             currentPlayer = player2;
             turn = 1;
