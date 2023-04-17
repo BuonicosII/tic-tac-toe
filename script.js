@@ -70,6 +70,7 @@ const Game = (() => {
     const pvp = document.createElement('button');
     pvp.textContent = 'Player VS Player';
     header.appendChild(pvp);
+    pvp.addEventListener('click', pvpFunc);
 
     //create a pvcpu button to start the pvcpu game
     const pvcpu = document.createElement('button');
@@ -77,22 +78,62 @@ const Game = (() => {
     header.appendChild(pvcpu);
 
     //function to display a form to create a player
+    function createForm (player) {
+        const form = document.createElement('form');
+        const nameContainer = document.createElement('div');
+        const nameInput = document.createElement('input');
+        nameInput.setAttribute('id', 'nameInput');
+        nameInput.setAttribute('name', 'nameInput');
+        const nameLabel = document.createElement('label')
+        nameLabel.setAttribute('for', 'nameInput');
+        nameLabel.textContent = 'Player name';
+        const markerContainer = document.createElement('div');
+        const markerInput = document.createElement('input');
+        markerInput.setAttribute('id', 'markerInput');
+        markerInput.setAttribute('name', 'markerInput');
+        const markerLabel = document.createElement('label')
+        markerLabel.setAttribute('for', 'markerInput');
+        markerLabel.textContent = 'Player marker';
+        const submitButton = document.createElement('button');
+        submitButton.setAttribute('type', 'submit');
+        submitButton.textContent = 'Create player';      
+
+        header.appendChild(form);
+        form.appendChild(nameContainer);
+        nameContainer.appendChild(nameLabel);
+        nameContainer.appendChild(nameInput);
+        form.appendChild(markerContainer);
+        markerContainer.appendChild(markerLabel);
+        markerContainer.appendChild(markerInput);
+        form.appendChild(submitButton);
+
+        submitButton.addEventListener('click', (event) => {
+            event.preventDefault();
+            if (!form.checkValidity()) {
+                form.reportValidity();
+            } else {
+                player = playerFactory(nameInput.value, markerInput.value);
+                console.log(player.name)
+                while (header.hasChildNodes()) {
+                    header.removeChild(header.firstChild);
+                  };
+            };
+        })
+    }
 
     function pvpFunc () {
         while (header.hasChildNodes()) {
-            header.removeChild(table.firstChild);
+            header.removeChild(header.firstChild);
           };
 
+        createForm(player1);
+
+        if (player1.name !== '') {
+        createForm(player2);
+        Gameboard.resetBoard;
+        }
         
     }
-
-    //gioca contro giocatore
-    //  rimuovi tutti i child pagina
-    //  form (name, marker)
-    //  assegna nuovo giocatore a player1
-    //  assegna nuovo giocatore a player2
-    //  rimuovi tutti i child pagina
-    //  initializeboard
 
     //gioca contro computer
     //  rimuovi tutti i child pagina
@@ -107,7 +148,7 @@ const Game = (() => {
         return { name, marker };
     };
     
-    const player1 = playerFactory('player', 'X');
+    const player1 = ''
 
     const player2 = playerFactory('computer', 'O');
     let turn = 0;
