@@ -86,106 +86,142 @@ const Game = (() => {
     header.appendChild(pvcpu);
     pvcpu.addEventListener('click', pvCpuFunc);
 
-    //function to display a form to create a player
-    function createForm () {
-        const form = document.createElement('form');
-        const nameContainer = document.createElement('div');
-        const nameInput = document.createElement('input');
-        nameInput.setAttribute('id', 'nameInput');
-        nameInput.setAttribute('name', 'nameInput');
-        const nameLabel = document.createElement('label')
-        nameLabel.setAttribute('for', 'nameInput');
-        nameLabel.textContent = 'Player name';
-        const markerContainer = document.createElement('div');
-        const markerInput = document.createElement('input');
-        markerInput.setAttribute('id', 'markerInput');
-        markerInput.setAttribute('name', 'markerInput');
-        const markerLabel = document.createElement('label')
-        markerLabel.setAttribute('for', 'markerInput');
-        markerLabel.textContent = 'Player marker';
-        const submitButton = document.createElement('button');
-        submitButton.setAttribute('type', 'submit');
-        submitButton.textContent = 'Create player';      
-
-        header.appendChild(form);
-        form.appendChild(nameContainer);
-        nameContainer.appendChild(nameLabel);
-        nameContainer.appendChild(nameInput);
-        form.appendChild(markerContainer);
-        markerContainer.appendChild(markerLabel);
-        markerContainer.appendChild(markerInput);
-        form.appendChild(submitButton);
-
-        submitButton.addEventListener('click', (event) => {
-            event.preventDefault();
-            if (!form.checkValidity()) {
-                form.reportValidity();
-            } else {
-                player1 = playerFactory(nameInput.value, markerInput.value);
-                currentPlayer = player1;
-                //console.log(player1.name, player1.marker)
-                while (header.hasChildNodes()) {
-                    header.removeChild(header.firstChild);
-                  };
-
-                  const form2 = document.createElement('form');
-                  const nameContainer2 = document.createElement('div');
-                  const nameInput2 = document.createElement('input');
-                  nameInput2.setAttribute('id', 'nameInput2');
-                  nameInput2.setAttribute('name', 'nameInput2');
-                  const nameLabel2 = document.createElement('label')
-                  nameLabel2.setAttribute('for', 'nameInput2');
-                  nameLabel2.textContent = 'Player name';
-                  const markerContainer2 = document.createElement('div');
-                  const markerInput2 = document.createElement('input');
-                  markerInput2.setAttribute('id', 'markerInput2');
-                  markerInput2.setAttribute('name', 'markerInput2');
-                  const markerLabel2 = document.createElement('label')
-                  markerLabel2.setAttribute('for', 'markerInput2');
-                  markerLabel2.textContent = 'Player marker';
-                  const submitButton2 = document.createElement('button');
-                  submitButton2.setAttribute('type', 'submit');
-                  submitButton2.textContent = 'Create player';      
-          
-                  header.appendChild(form2);
-                  form2.appendChild(nameContainer2);
-                  nameContainer2.appendChild(nameLabel2);
-                  nameContainer2.appendChild(nameInput2);
-                  form2.appendChild(markerContainer2);
-                  markerContainer2.appendChild(markerLabel2);
-                  markerContainer2.appendChild(markerInput2);
-                  form2.appendChild(submitButton2);
-
-                submitButton2.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    if (!form2.checkValidity()) {
-                        form2.reportValidity();
-                    } else {
-                        player2 = playerFactory(nameInput2.value, markerInput2.value);
-                        //console.log(player2.name, player2.marker)
-                        while (header.hasChildNodes()) {
-                            header.removeChild(header.firstChild);
-                          };
-                          Gameboard.resetBoard();
-                    };
-                })
-            };
-        })
-    }
 
     function pvpFunc () {
-        while (header.hasChildNodes()) {
+          while (header.hasChildNodes()) {
             header.removeChild(header.firstChild);
           };
-        createForm();
+          const form = document.createElement('form');
+          const nameContainer = document.createElement('div');
+          const nameInput = document.createElement('input');
+          nameInput.setAttribute('id', 'nameInput');
+          nameInput.setAttribute('name', 'nameInput');
+          const nameLabel = document.createElement('label')
+          nameLabel.setAttribute('for', 'nameInput');
+          nameLabel.textContent = 'Player name';
+          const markerContainer = document.createElement('div');
+          const markerInput = document.createElement('input');
+          markerInput.setAttribute('id', 'markerInput');
+          markerInput.setAttribute('name', 'markerInput');
+          const markerLabel = document.createElement('label')
+          markerLabel.setAttribute('for', 'markerInput');
+          markerLabel.textContent = 'Player marker';
+          const submitButton = document.createElement('button');
+          submitButton.setAttribute('type', 'submit');
+          submitButton.textContent = 'Create player';      
+  
+          header.appendChild(form);
+          form.appendChild(nameContainer);
+          nameContainer.appendChild(nameLabel);
+          nameContainer.appendChild(nameInput);
+          form.appendChild(markerContainer);
+          markerContainer.appendChild(markerLabel);
+          markerContainer.appendChild(markerInput);
+          form.appendChild(submitButton);
+  
+          submitButton.addEventListener('click', (event) => {
+              event.preventDefault();
+              if (!form.checkValidity()) {
+                  form.reportValidity();
+              } else {
+                  player1 = playerFactory(nameInput.value, markerInput.value);
+                  currentPlayer = player1;
+                  //console.log(player1.name, player1.marker)
+                  while (header.hasChildNodes()) {
+                      header.removeChild(header.firstChild);
+                    };
+  
+                    const form2 = document.createElement('form');
+                    const nameContainer2 = document.createElement('div');
+                    const nameInput2 = document.createElement('input');
+                    nameInput2.setAttribute('id', 'nameInput2');
+                    nameInput2.setAttribute('name', 'nameInput2');
+                    const nameLabel2 = document.createElement('label')
+                    nameLabel2.setAttribute('for', 'nameInput2');
+                    nameLabel2.textContent = 'Player name';
+                    const markerContainer2 = document.createElement('div');
+                    const markerInput2 = document.createElement('input');
+                    markerInput2.setAttribute('id', 'markerInput2');
+                    markerInput2.setAttribute('name', 'markerInput2');
+                    const markerLabel2 = document.createElement('label')
+                    markerLabel2.setAttribute('for', 'markerInput2');
+                    markerLabel2.textContent = 'Player marker';
+                    const submitButton2 = document.createElement('button');
+                    submitButton2.setAttribute('type', 'submit');
+                    submitButton2.textContent = 'Create player';      
+            
+                    header.appendChild(form2);
+                    form2.appendChild(nameContainer2);
+                    nameContainer2.appendChild(nameLabel2);
+                    nameContainer2.appendChild(nameInput2);
+                    form2.appendChild(markerContainer2);
+                    markerContainer2.appendChild(markerLabel2);
+                    markerContainer2.appendChild(markerInput2);
+                    form2.appendChild(submitButton2);
+  
+                  submitButton2.addEventListener('click', (event) => {
+                      event.preventDefault();
+                      if (!form2.checkValidity()) {
+                          form2.reportValidity();
+                      } else {
+                          player2 = playerFactory(nameInput2.value, markerInput2.value);
+                          //console.log(player2.name, player2.marker)
+                          while (header.hasChildNodes()) {
+                              header.removeChild(header.firstChild);
+                            };
+                            Gameboard.resetBoard();
+                      };
+                  })
+              };
+          })
     }
 
     function pvCpuFunc () {
         while (header.hasChildNodes()) {
             header.removeChild(header.firstChild);
           };
-        createForm();
-        player2 = playerFactory('Computer', 'O');
+          const form = document.createElement('form');
+          const nameContainer = document.createElement('div');
+          const nameInput = document.createElement('input');
+          nameInput.setAttribute('id', 'nameInput');
+          nameInput.setAttribute('name', 'nameInput');
+          const nameLabel = document.createElement('label')
+          nameLabel.setAttribute('for', 'nameInput');
+          nameLabel.textContent = 'Player name';
+          const markerContainer = document.createElement('div');
+          const markerInput = document.createElement('input');
+          markerInput.setAttribute('id', 'markerInput');
+          markerInput.setAttribute('name', 'markerInput');
+          const markerLabel = document.createElement('label')
+          markerLabel.setAttribute('for', 'markerInput');
+          markerLabel.textContent = 'Player marker';
+          const submitButton = document.createElement('button');
+          submitButton.setAttribute('type', 'submit');
+          submitButton.textContent = 'Create player';      
+  
+          header.appendChild(form);
+          form.appendChild(nameContainer);
+          nameContainer.appendChild(nameLabel);
+          nameContainer.appendChild(nameInput);
+          form.appendChild(markerContainer);
+          markerContainer.appendChild(markerLabel);
+          markerContainer.appendChild(markerInput);
+          form.appendChild(submitButton);
+  
+          submitButton.addEventListener('click', (event) => {
+              event.preventDefault();
+              if (!form.checkValidity()) {
+                  form.reportValidity();
+              } else {
+                  player1 = playerFactory(nameInput.value, markerInput.value);
+                  player2 = playerFactory('Computer', 'O');
+                  currentPlayer = player1;
+                  while (header.hasChildNodes()) {
+                      header.removeChild(header.firstChild);
+                    };
+                  Gameboard.resetBoard();
+              }
+           })
     }
 
     //gioca contro computer
