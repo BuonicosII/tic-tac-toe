@@ -54,7 +54,7 @@ const Gameboard = (() => {
         initializeBoard();
     }
 
-    initializeBoard();
+    //initializeBoard();
 
     return {victoryChecker, resetBoard, tieChecker}
 
@@ -63,6 +63,14 @@ const Gameboard = (() => {
 //module which handles the game
 
 const Game = (() => {
+
+    let player1;
+
+    let player2;
+    //= playerFactory('computer', 'O');
+    let turn = 0;
+
+    let currentPlayer = player1;
 
     const header = document.querySelector('#header');
 
@@ -76,9 +84,10 @@ const Game = (() => {
     const pvcpu = document.createElement('button');
     pvcpu.textContent = 'Player VS Computer';
     header.appendChild(pvcpu);
+    pvcpu.addEventListener('click', pvCpuFunc);
 
     //function to display a form to create a player
-    function createForm (player) {
+    function createForm () {
         const form = document.createElement('form');
         const nameContainer = document.createElement('div');
         const nameInput = document.createElement('input');
@@ -112,11 +121,54 @@ const Game = (() => {
             if (!form.checkValidity()) {
                 form.reportValidity();
             } else {
-                player = playerFactory(nameInput.value, markerInput.value);
-                console.log(player.name)
+                player1 = playerFactory(nameInput.value, markerInput.value);
+                currentPlayer = player1;
+                //console.log(player1.name, player1.marker)
                 while (header.hasChildNodes()) {
                     header.removeChild(header.firstChild);
                   };
+
+                  const form2 = document.createElement('form');
+                  const nameContainer2 = document.createElement('div');
+                  const nameInput2 = document.createElement('input');
+                  nameInput2.setAttribute('id', 'nameInput2');
+                  nameInput2.setAttribute('name', 'nameInput2');
+                  const nameLabel2 = document.createElement('label')
+                  nameLabel2.setAttribute('for', 'nameInput2');
+                  nameLabel2.textContent = 'Player name';
+                  const markerContainer2 = document.createElement('div');
+                  const markerInput2 = document.createElement('input');
+                  markerInput2.setAttribute('id', 'markerInput2');
+                  markerInput2.setAttribute('name', 'markerInput2');
+                  const markerLabel2 = document.createElement('label')
+                  markerLabel2.setAttribute('for', 'markerInput2');
+                  markerLabel2.textContent = 'Player marker';
+                  const submitButton2 = document.createElement('button');
+                  submitButton2.setAttribute('type', 'submit');
+                  submitButton2.textContent = 'Create player';      
+          
+                  header.appendChild(form2);
+                  form2.appendChild(nameContainer2);
+                  nameContainer2.appendChild(nameLabel2);
+                  nameContainer2.appendChild(nameInput2);
+                  form2.appendChild(markerContainer2);
+                  markerContainer2.appendChild(markerLabel2);
+                  markerContainer2.appendChild(markerInput2);
+                  form2.appendChild(submitButton2);
+
+                submitButton2.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    if (!form2.checkValidity()) {
+                        form2.reportValidity();
+                    } else {
+                        player2 = playerFactory(nameInput2.value, markerInput2.value);
+                        //console.log(player2.name, player2.marker)
+                        while (header.hasChildNodes()) {
+                            header.removeChild(header.firstChild);
+                          };
+                          Gameboard.resetBoard();
+                    };
+                })
             };
         })
     }
@@ -125,14 +177,15 @@ const Game = (() => {
         while (header.hasChildNodes()) {
             header.removeChild(header.firstChild);
           };
+        createForm();
+    }
 
-        createForm(player1);
-
-        if (player1.name !== '') {
-        createForm(player2);
-        Gameboard.resetBoard;
-        }
-        
+    function pvCpuFunc () {
+        while (header.hasChildNodes()) {
+            header.removeChild(header.firstChild);
+          };
+        createForm();
+        player2 = playerFactory('Computer', 'O');
     }
 
     //gioca contro computer
@@ -147,19 +200,13 @@ const Game = (() => {
     const playerFactory = (name, marker) => {
         return { name, marker };
     };
-    
-    const player1 = ''
-
-    const player2 = playerFactory('computer', 'O');
-    let turn = 0;
-    let currentPlayer = player1;
 
     let _turnation = () => {
         if (Gameboard.victoryChecker()) {
             console.log(`${currentPlayer.name} won`);
             Gameboard.resetBoard();
             turn = 0;
-            currentPalyer = player1;
+            currentPlayer = player1;
         } else if (Gameboard.tieChecker()){
             console.log(`Tie!`);
             Gameboard.resetBoard();
@@ -182,6 +229,6 @@ const Game = (() => {
         return `${currentPlayer.marker}`;
     }
 
-    return {callTurnation, getMarker}
+    return {callTurnation, getMarker, pvpFunc, pvCpuFunc}
 
 })();
