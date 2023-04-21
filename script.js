@@ -12,6 +12,23 @@ const Gameboard = (() => {
         }
     }
 
+    function aiChoice () {
+
+        let pic = Math.floor(Math.random() * (8 - 0 + 1) + 0);
+
+        if (gameboard[pic] === '') {
+        gameboard.splice(pic, 1, `${Game.getMarker()}`);
+        document.querySelector(`[data-index="${pic}"]`).textContent = `${Game.getMarker()}`;
+        } else aiChoice();
+    
+    }
+
+    function aiChoiceGetter () {
+        if (Game.getTurn() === 1) {
+        aiChoice();
+        Game.callTurnation();};
+    }
+
     function initializeBoard () {
         for (const [index, value] of gameboard.entries()) {
             const oneCell = document.createElement('div');
@@ -56,7 +73,7 @@ const Gameboard = (() => {
 
     //initializeBoard();
 
-    return {victoryChecker, resetBoard, tieChecker}
+    return {victoryChecker, resetBoard, tieChecker, aiChoiceGetter}
 
 })();
 
@@ -249,8 +266,14 @@ const Game = (() => {
             turn = 0;
             currentPlayer = player1;
         } else if (turn === 0) {
+            if (player2.name === 'Computer') {
+                currentPlayer = player2;
+                turn = 1;
+                Gameboard.aiChoiceGetter();
+            } else {
             currentPlayer = player2;
             turn = 1;
+            }
         } else if (turn === 1) {
             currentPlayer = player1;
             turn = 0;
@@ -265,6 +288,14 @@ const Game = (() => {
         return `${currentPlayer.marker}`;
     }
 
-    return {callTurnation, getMarker, pvpFunc, pvCpuFunc}
+    let getPlayer = () => {
+        return `${currentPlayer.name}`
+    }
+
+    let getTurn = () => {
+        return turn
+    };
+
+    return {callTurnation, getMarker, pvpFunc, pvCpuFunc, getTurn, player2}
 
 })();
