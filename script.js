@@ -91,6 +91,8 @@ const Game = (() => {
 
     const header = document.querySelector('#header');
 
+    const messageDisplay = document.createElement('h2');
+
     //create a pvp button to start the pvp game
     const pvp = document.createElement('button');
     pvp.textContent = 'Player VS Player';
@@ -256,13 +258,21 @@ const Game = (() => {
 
     let _turnation = () => {
         if (Gameboard.victoryChecker()) {
-            console.log(`${currentPlayer.name} won`);
-            Gameboard.resetBoard();
+            header.appendChild(pvp);
+            pvp.addEventListener('click', pvpFunc);
+            messageDisplay.textContent = `${currentPlayer.name} won`;
+            header.appendChild(messageDisplay);
+            header.appendChild(pvcpu);
+            pvcpu.addEventListener('click', pvCpuFunc);
             turn = 0;
             currentPlayer = player1;
         } else if (Gameboard.tieChecker()){
-            console.log(`Tie!`);
-            Gameboard.resetBoard();
+            header.appendChild(pvp);
+            pvp.addEventListener('click', pvpFunc);
+            messageDisplay.textContent = `Tie!`;
+            header.appendChild(messageDisplay);
+            header.appendChild(pvcpu);
+            pvcpu.addEventListener('click', pvCpuFunc);
             turn = 0;
             currentPlayer = player1;
         } else if (turn === 0) {
