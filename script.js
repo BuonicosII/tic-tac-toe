@@ -23,9 +23,85 @@ const Gameboard = (() => {
     
     }
 
+    function bestAiMove () {
+        let bestScore = -Infinity
+        let bestMove
+        for (let i = 0; i < 9; i++) {
+            if (gameboard[i] === '') {
+                gameboard.splice(i, 1, `${Game.getMarker()}`);
+                let score = minimax(gameboard, 0, false)
+                gameboard.splice(i, 1, ``);
+                if (score > bestScore) {
+                    bestScore = score;
+                    bestMove = i;
+                }
+            }
+        }
+        gameboard.splice(bestMove, 1, `${Game.getMarker()}`);
+        document.querySelector(`[data-index="${bestMove}"]`).textContent = `${Game.getMarker()}`;
+    }
+
+    function minimax(board, depth, isMaximizing) {
+        if (
+            board[0] === board[1] && board[1] === board[2] && board[0] !== '' && board[0] === 'O' ||
+            board[3] === board[4] && board[4] === board[5] && board[3] !== '' && board[3] === 'O' ||
+            board[6] === board[7] && board[7] === board[8] && board[6] !== '' && board[6] === 'O' ||
+            board[0] === board[3] && board[3] === board[6] && board[0] !== '' && board[0] === 'O' ||
+            board[1] === board[4] && board[4] === board[7] && board[1] !== '' && board[1] === 'O' ||
+            board[2] === board[5] && board[5] === board[8] && board[2] !== '' && board[2] === 'O' ||
+            board[0] === board[4] && board[4] === board[8] && board[0] !== '' && board[0] === 'O' ||
+            board[2] === board[4] && board[4] === board[6] && board[2] !== '' && board[2] === 'O'
+            ) {
+                return 1;
+            } else if (
+
+            board[0] === board[1] && board[1] === board[2] && board[0] !== '' && board[0] !== 'O' ||
+            board[3] === board[4] && board[4] === board[5] && board[3] !== '' && board[3] !== 'O' ||
+            board[6] === board[7] && board[7] === board[8] && board[6] !== '' && board[6] !== 'O' ||
+            board[0] === board[3] && board[3] === board[6] && board[0] !== '' && board[0] !== 'O' ||
+            board[1] === board[4] && board[4] === board[7] && board[1] !== '' && board[1] !== 'O' ||
+            board[2] === board[5] && board[5] === board[8] && board[2] !== '' && board[2] !== 'O' ||
+            board[0] === board[4] && board[4] === board[8] && board[0] !== '' && board[0] !== 'O' ||
+            board[2] === board[4] && board[4] === board[6] && board[2] !== '' && board[2] !== 'O'
+            ) {
+                return -1;
+            } else if (board.indexOf('') === -1) {
+                return 0;
+            }
+
+            if (isMaximizing) {
+                let bestScore = -Infinity
+                for (let i = 0; i < 9; i++) {
+                    if (board[i] === '') {
+                        board.splice(i, 1, `${Game.getMarker()}`);
+                        let score = minimax(board, depth + 1, false)
+                        board.splice(i, 1, ``);
+                        if (score > bestScore) {
+                            bestScore = score;
+                        } 
+                    }
+
+                }
+                return bestScore;
+            } else {
+                let bestScore = Infinity
+                for (let i = 0; i < 9; i++) {
+                    if (board[i] === '') {
+                        board.splice(i, 1, `${Game.humanPlayerMarker()}`);
+                        let score = minimax(board, depth + 1, true)
+                        board.splice(i, 1, ``);
+                        if (score < bestScore) {
+                            bestScore = score;
+                        } 
+                    }
+                }
+                return bestScore;
+            }
+    }
+
     function aiChoiceGetter () {
         if (Game.getTurn() === 1) {
-        aiChoice();
+        bestAiMove();
         Game.callTurnation();};
     }
 
@@ -306,6 +382,10 @@ const Game = (() => {
         return turn
     };
 
-    return {callTurnation, getMarker, pvpFunc, pvCpuFunc, getTurn, player2}
+    let humanPlayerMarker = () => {
+        return `${player1.marker}`;
+    }
+
+    return {callTurnation, getMarker, pvpFunc, pvCpuFunc, getTurn, humanPlayerMarker}
 
 })();
