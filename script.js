@@ -100,9 +100,13 @@ const Gameboard = (() => {
     }
 
     function aiChoiceGetter () {
-        if (Game.getTurn() === 1) {
+        if (Game.getTurn() === 1 && Game.getAiDifficulty() === 'Unbeatable') {
         bestAiMove();
-        Game.callTurnation();};
+        Game.callTurnation();
+        } else {
+            aiChoice();
+            Game.callTurnation();
+        } 
     }
 
     function initializeBoard () {
@@ -113,6 +117,7 @@ const Gameboard = (() => {
             oneCell.textContent = value;
             oneCell.addEventListener('click', choiceOnBoard);
             table.appendChild(oneCell);
+            table.setAttribute('class', 'visibleBorder');
         }
     }
 
@@ -160,8 +165,10 @@ const Game = (() => {
     let player1;
 
     let player2;
-    //= playerFactory('computer', 'O');
+
     let turn = 0;
+
+    let aiDifficulty;
 
     let currentPlayer = player1;
 
@@ -260,7 +267,6 @@ const Game = (() => {
                           form2.reportValidity();
                       } else {
                           player2 = playerFactory(nameInput2.value, markerInput2.value);
-                          //console.log(player2.name, player2.marker)
                           while (header.hasChildNodes()) {
                               header.removeChild(header.firstChild);
                             };
@@ -314,7 +320,32 @@ const Game = (() => {
                   while (header.hasChildNodes()) {
                       header.removeChild(header.firstChild);
                     };
-                  Gameboard.resetBoard();
+                  let newDiv = document.createElement('div');
+                  let desc = document.createElement('p');
+                  desc.textContent = 'Choose AI difficulty';
+                  let easyAiButton = document.createElement('button');
+                  easyAiButton.textContent = 'Easy';
+                  let hardAiButton = document.createElement('button');
+                  hardAiButton.textContent = 'Unbeatable';
+                  header.appendChild(newDiv);
+                  newDiv.appendChild(desc);
+                  newDiv.appendChild(easyAiButton);
+                  newDiv.appendChild(hardAiButton);
+                  easyAiButton.addEventListener('click', ()=> {
+                    aiDifficulty = 'Easy';
+                    while (header.hasChildNodes()) {
+                        header.removeChild(header.firstChild);
+                        Gameboard.resetBoard();
+                      };
+                  });
+                  hardAiButton.addEventListener('click', ()=> {
+                    aiDifficulty = 'Unbeatable';
+                    while (header.hasChildNodes()) {
+                        header.removeChild(header.firstChild);
+                        Gameboard.resetBoard();
+                      };
+                  });
+
               }
            })
     }
@@ -336,8 +367,18 @@ const Game = (() => {
         if (Gameboard.victoryChecker()) {
             header.appendChild(pvp);
             pvp.addEventListener('click', pvpFunc);
+            anotherDiv = document.createElement('div');
             messageDisplay.textContent = `${currentPlayer.name} won`;
-            header.appendChild(messageDisplay);
+            playAgainButton = document.createElement('button');
+            playAgainButton.textContent = 'Play Again';
+            playAgainButton.addEventListener('click', () => {
+                while (header.hasChildNodes()) {
+                    header.removeChild(header.firstChild);}
+                Gameboard.resetBoard();
+            });
+            anotherDiv.appendChild(messageDisplay);
+            anotherDiv.appendChild(playAgainButton);
+            header.appendChild(anotherDiv);
             header.appendChild(pvcpu);
             pvcpu.addEventListener('click', pvCpuFunc);
             turn = 0;
@@ -345,8 +386,20 @@ const Game = (() => {
         } else if (Gameboard.tieChecker()){
             header.appendChild(pvp);
             pvp.addEventListener('click', pvpFunc);
+            anotherDiv = document.createElement('div');
+            header.appendChild(anotherDiv);
             messageDisplay.textContent = `Tie!`;
-            header.appendChild(messageDisplay);
+            playAgainButton = document.createElement('button');
+            playAgainButton.textContent = 'Play Again';
+            playAgainButton.addEventListener('click', () => {
+                while (header.hasChildNodes()) {
+                    header.removeChild(header.firstChild);}
+                Gameboard.resetBoard();
+            });
+            anotherDiv.appendChild(messageDisplay);
+            anotherDiv.appendChild(playAgainButton);
+            header.appendChild(pvcpu);
+            pvcpu.addEventListener('click', pvCpuFunc);
             header.appendChild(pvcpu);
             pvcpu.addEventListener('click', pvCpuFunc);
             turn = 0;
@@ -386,6 +439,10 @@ const Game = (() => {
         return `${player1.marker}`;
     }
 
-    return {callTurnation, getMarker, pvpFunc, pvCpuFunc, getTurn, humanPlayerMarker}
+    let getAiDifficulty = () => {
+        return `${aiDifficulty}`;
+    }
+
+    return {callTurnation, getMarker, pvpFunc, pvCpuFunc, getTurn, humanPlayerMarker, getAiDifficulty}
 
 })();

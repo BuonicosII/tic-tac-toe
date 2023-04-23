@@ -10,13 +10,15 @@ body {
 #header {
     height: 11vh;
     width: 66vh;
-    border: solid 1px black;
     display: flex;
     justify-content: space-between;
 }
 
-#table {
+.visibleBorder {
     border: solid 1px black;
+}
+
+#table {
     height: 33vh;
     width: 33vh;
     display: grid;
