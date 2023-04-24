@@ -177,15 +177,19 @@ const Game = (() => {
     const messageDisplay = document.createElement('h2');
 
     //create a pvp button to start the pvp game
+    const firstDiv = document.createElement('div');
     const pvp = document.createElement('button');
     pvp.textContent = 'Player VS Player';
-    header.appendChild(pvp);
+    header.appendChild(firstDiv);
+    firstDiv.appendChild(pvp);
     pvp.addEventListener('click', pvpFunc);
 
     //create a pvcpu button to start the pvcpu game
+    const secondDiv = document.createElement('div');
     const pvcpu = document.createElement('button');
     pvcpu.textContent = 'Player VS Computer';
-    header.appendChild(pvcpu);
+    header.appendChild(secondDiv);
+    secondDiv.appendChild(pvcpu);
     pvcpu.addEventListener('click', pvCpuFunc);
 
 
@@ -195,6 +199,7 @@ const Game = (() => {
           };
           const form = document.createElement('form');
           const nameContainer = document.createElement('div');
+          nameContainer.setAttribute('class', 'formDiv');
           const nameInput = document.createElement('input');
           nameInput.setAttribute('id', 'nameInput');
           nameInput.setAttribute('name', 'nameInput');
@@ -202,6 +207,7 @@ const Game = (() => {
           nameLabel.setAttribute('for', 'nameInput');
           nameLabel.textContent = 'Player name';
           const markerContainer = document.createElement('div');
+          markerContainer.setAttribute('class', 'formDiv');
           const markerInput = document.createElement('input');
           markerInput.setAttribute('id', 'markerInput');
           markerInput.setAttribute('name', 'markerInput');
@@ -235,6 +241,7 @@ const Game = (() => {
   
                     const form2 = document.createElement('form');
                     const nameContainer2 = document.createElement('div');
+                    nameContainer2.setAttribute('class', 'formDiv');
                     const nameInput2 = document.createElement('input');
                     nameInput2.setAttribute('id', 'nameInput2');
                     nameInput2.setAttribute('name', 'nameInput2');
@@ -242,6 +249,7 @@ const Game = (() => {
                     nameLabel2.setAttribute('for', 'nameInput2');
                     nameLabel2.textContent = 'Player name';
                     const markerContainer2 = document.createElement('div');
+                    markerContainer2.setAttribute('class', 'formDiv');
                     const markerInput2 = document.createElement('input');
                     markerInput2.setAttribute('id', 'markerInput2');
                     markerInput2.setAttribute('name', 'markerInput2');
@@ -283,6 +291,7 @@ const Game = (() => {
           };
           const form = document.createElement('form');
           const nameContainer = document.createElement('div');
+          nameContainer.setAttribute('class', 'formDiv');
           const nameInput = document.createElement('input');
           nameInput.setAttribute('id', 'nameInput');
           nameInput.setAttribute('name', 'nameInput');
@@ -290,6 +299,7 @@ const Game = (() => {
           nameLabel.setAttribute('for', 'nameInput');
           nameLabel.textContent = 'Player name';
           const markerContainer = document.createElement('div');
+          markerContainer.setAttribute('class', 'formDiv');
           const markerInput = document.createElement('input');
           markerInput.setAttribute('id', 'markerInput');
           markerInput.setAttribute('name', 'markerInput');
@@ -365,7 +375,8 @@ const Game = (() => {
 
     let _turnation = () => {
         if (Gameboard.victoryChecker()) {
-            header.appendChild(pvp);
+            header.appendChild(firstDiv);
+            firstDiv.appendChild(pvp);
             pvp.addEventListener('click', pvpFunc);
             anotherDiv = document.createElement('div');
             messageDisplay.textContent = `${currentPlayer.name} won`;
@@ -379,12 +390,14 @@ const Game = (() => {
             anotherDiv.appendChild(messageDisplay);
             anotherDiv.appendChild(playAgainButton);
             header.appendChild(anotherDiv);
-            header.appendChild(pvcpu);
+            header.appendChild(secondDiv);
+            secondDiv.appendChild(pvcpu);
             pvcpu.addEventListener('click', pvCpuFunc);
             turn = 0;
             currentPlayer = player1;
         } else if (Gameboard.tieChecker()){
-            header.appendChild(pvp);
+            header.appendChild(firstDiv);
+            firstDiv.appendChild(pvp);
             pvp.addEventListener('click', pvpFunc);
             anotherDiv = document.createElement('div');
             header.appendChild(anotherDiv);
@@ -398,9 +411,9 @@ const Game = (() => {
             });
             anotherDiv.appendChild(messageDisplay);
             anotherDiv.appendChild(playAgainButton);
-            header.appendChild(pvcpu);
-            pvcpu.addEventListener('click', pvCpuFunc);
-            header.appendChild(pvcpu);
+            header.appendChild(anotherDiv);
+            header.appendChild(secondDiv);
+            secondDiv.appendChild(pvcpu);
             pvcpu.addEventListener('click', pvCpuFunc);
             turn = 0;
             currentPlayer = player1;
