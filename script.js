@@ -203,6 +203,8 @@ const Game = (() => {
           const nameInput = document.createElement('input');
           nameInput.setAttribute('id', 'nameInput');
           nameInput.setAttribute('name', 'nameInput');
+          nameInput.setAttribute('maxlength', '10');
+          nameInput.required = true;
           const nameLabel = document.createElement('label')
           nameLabel.setAttribute('for', 'nameInput');
           nameLabel.textContent = 'Player name';
@@ -211,6 +213,8 @@ const Game = (() => {
           const markerInput = document.createElement('input');
           markerInput.setAttribute('id', 'markerInput');
           markerInput.setAttribute('name', 'markerInput');
+          markerInput.setAttribute('maxlength', '1');
+          markerInput.required = true;
           const markerLabel = document.createElement('label')
           markerLabel.setAttribute('for', 'markerInput');
           markerLabel.textContent = 'Player marker';
@@ -232,7 +236,7 @@ const Game = (() => {
               if (!form.checkValidity()) {
                   form.reportValidity();
               } else {
-                  player1 = playerFactory(nameInput.value, markerInput.value);
+                  player1 = playerFactory(nameInput.value, markerInput.value.toUpperCase());
                   currentPlayer = player1;
                   //console.log(player1.name, player1.marker)
                   while (header.hasChildNodes()) {
@@ -245,6 +249,8 @@ const Game = (() => {
                     const nameInput2 = document.createElement('input');
                     nameInput2.setAttribute('id', 'nameInput2');
                     nameInput2.setAttribute('name', 'nameInput2');
+                    nameInput2.setAttribute('maxlength', '10');
+                    nameInput2.required = true;
                     const nameLabel2 = document.createElement('label')
                     nameLabel2.setAttribute('for', 'nameInput2');
                     nameLabel2.textContent = 'Player name';
@@ -253,6 +259,8 @@ const Game = (() => {
                     const markerInput2 = document.createElement('input');
                     markerInput2.setAttribute('id', 'markerInput2');
                     markerInput2.setAttribute('name', 'markerInput2');
+                    markerInput2.setAttribute('maxlength', '1');
+                    markerInput2.required = true;
                     const markerLabel2 = document.createElement('label')
                     markerLabel2.setAttribute('for', 'markerInput2');
                     markerLabel2.textContent = 'Player marker';
@@ -273,8 +281,12 @@ const Game = (() => {
                       event.preventDefault();
                       if (!form2.checkValidity()) {
                           form2.reportValidity();
+                      } else if (nameInput2.value.toUpperCase() === player1.name.toUpperCase()) {
+                        alert('Name already taken by player1');
+                      } else if (markerInput2.value.toUpperCase() === player1.marker.toUpperCase()) {
+                        alert('Marker already taken by player1');
                       } else {
-                          player2 = playerFactory(nameInput2.value, markerInput2.value);
+                          player2 = playerFactory(nameInput2.value, markerInput2.value.toUpperCase());
                           while (header.hasChildNodes()) {
                               header.removeChild(header.firstChild);
                             };
@@ -295,6 +307,8 @@ const Game = (() => {
           const nameInput = document.createElement('input');
           nameInput.setAttribute('id', 'nameInput');
           nameInput.setAttribute('name', 'nameInput');
+          nameInput.setAttribute('maxlength', '10');
+          nameInput.required = true;
           const nameLabel = document.createElement('label')
           nameLabel.setAttribute('for', 'nameInput');
           nameLabel.textContent = 'Player name';
@@ -303,6 +317,8 @@ const Game = (() => {
           const markerInput = document.createElement('input');
           markerInput.setAttribute('id', 'markerInput');
           markerInput.setAttribute('name', 'markerInput');
+          markerInput.setAttribute('maxlength', '1');
+          markerInput.required = true;
           const markerLabel = document.createElement('label')
           markerLabel.setAttribute('for', 'markerInput');
           markerLabel.textContent = 'Player marker';
@@ -324,13 +340,14 @@ const Game = (() => {
               if (!form.checkValidity()) {
                   form.reportValidity();
               } else {
-                  player1 = playerFactory(nameInput.value, markerInput.value);
+                  player1 = playerFactory(nameInput.value, markerInput.value.toUpperCase());
                   player2 = playerFactory('Computer', 'O');
                   currentPlayer = player1;
                   while (header.hasChildNodes()) {
                       header.removeChild(header.firstChild);
                     };
                   let newDiv = document.createElement('div');
+                  newDiv.setAttribute('class', 'formDiv');
                   let desc = document.createElement('p');
                   desc.textContent = 'Choose AI difficulty';
                   let easyAiButton = document.createElement('button');
