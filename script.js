@@ -339,6 +339,10 @@ const Game = (() => {
               event.preventDefault();
               if (!form.checkValidity()) {
                   form.reportValidity();
+              } else if (nameInput.value.toUpperCase() === 'Computer'.toUpperCase()) {
+                alert('Name already taken by the AI!');
+              } else if (markerInput.value.toUpperCase() === 'O'.toUpperCase()) {
+                  alert('Marker already taken by the AI!');
               } else {
                   player1 = playerFactory(nameInput.value, markerInput.value.toUpperCase());
                   player2 = playerFactory('Computer', 'O');

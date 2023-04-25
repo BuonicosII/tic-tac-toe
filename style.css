@@ -11,7 +11,7 @@ body {
 #header {
     display: flex;
     gap: 10vh;
-    height: 11vh;
+    height: 12vh;
 }
 
 .visibleBorder {
