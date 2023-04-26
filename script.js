@@ -132,6 +132,10 @@ const Gameboard = (() => {
             gameboard[0] === gameboard[4] && gameboard[4] === gameboard[8] && gameboard[0] !== '' ||
             gameboard[2] === gameboard[4] && gameboard[4] === gameboard[6] && gameboard[2] !== '' 
             ) {
+                let allCells = document.querySelectorAll('.cell');
+                allCells.forEach((cell) => {
+                    cell.removeEventListener('click', choiceOnBoard);
+                });
                 return true;
             }
     };
