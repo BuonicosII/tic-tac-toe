@@ -182,6 +182,7 @@ const Game = (() => {
 
     //create a pvp button to start the pvp game
     const firstDiv = document.createElement('div');
+    firstDiv.setAttribute('class', 'centerDiv');
     const pvp = document.createElement('button');
     pvp.textContent = 'Player VS Player';
     header.appendChild(firstDiv);
@@ -190,6 +191,7 @@ const Game = (() => {
 
     //create a pvcpu button to start the pvcpu game
     const secondDiv = document.createElement('div');
+    secondDiv.setAttribute('class', 'centerDiv');
     const pvcpu = document.createElement('button');
     pvcpu.textContent = 'Player VS Computer';
     header.appendChild(secondDiv);
@@ -404,6 +406,7 @@ const Game = (() => {
             firstDiv.appendChild(pvp);
             pvp.addEventListener('click', pvpFunc);
             anotherDiv = document.createElement('div');
+            anotherDiv.setAttribute('class', 'verticalDiv');
             messageDisplay.textContent = `${currentPlayer.name} won`;
             playAgainButton = document.createElement('button');
             playAgainButton.textContent = 'Play Again';
@@ -425,6 +428,7 @@ const Game = (() => {
             firstDiv.appendChild(pvp);
             pvp.addEventListener('click', pvpFunc);
             anotherDiv = document.createElement('div');
+            anotherDiv.setAttribute('class', 'verticalDiv');
             header.appendChild(anotherDiv);
             messageDisplay.textContent = `Tie!`;
             playAgainButton = document.createElement('button');
