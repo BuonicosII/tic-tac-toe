@@ -198,6 +198,8 @@ const Game = (() => {
     secondDiv.appendChild(pvcpu);
     pvcpu.addEventListener('click', pvCpuFunc);
 
+    pvp.setAttribute('style', `width: ${pvcpu.offsetWidth}px`);
+
 
     function pvpFunc () {
           while (header.hasChildNodes()) {
